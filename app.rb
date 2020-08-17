@@ -1,5 +1,6 @@
 require 'sinatra'
 
 get '/' do
-  "Hello, world"
+  File.open("cake.list").each_with_index do |line, index|
+  	puts "#{index}. #{line}"
 end
