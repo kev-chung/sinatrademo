@@ -1,9 +1,9 @@
 require 'sinatra'
 
 get '/' do
-  cakes = ""	
-  File.open("cake.list").each_with_index do |line, index|
-  	cakes += "#{index+1}. #{line}<br>"
+  cakes = "<ol>"	
+  File.open("cake.list").each do |line|
+  	cakes += "<li>#{line}</li>"
   end
-  cakes.to_s
+  cakes.to_s + "</ol>"
 end
