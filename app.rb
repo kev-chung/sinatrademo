@@ -1,9 +1,11 @@
 require 'sinatra'
+require 'sinatra/json'
 
 get '/' do
-  cakes = "<ol>"	
-  File.open("cake.list").each do |line|
-  	cakes += "<li>#{line}</li>"
-  end
-  cakes.to_s + "</ol>"
+  erb :index
 end
+
+get '/cakes.json' do
+  json File.open("cake.list").lines.map{ |line| {:cake => line.strip} }
+end
+

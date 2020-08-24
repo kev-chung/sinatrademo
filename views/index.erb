@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cake List</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+	$(function() {
+		var cakeList = $("#cakeList");
+		var url = "/cakes.json";
+
+		$.getJSON(url, function(data) {
+			var cakes = data.map(function(item) {
+				return item.cake;
+			});
+
+			cakeList.empty();
+
+			if (cakes.length) {
+				var content = "<li>" + cakes.join("</li><li>") + "</li>";
+				var list = $("<ol>").html(content);
+				cakeList.append(list);
+			}
+		});
+	});
+	</script>
+</head>
+<body>
+	<h1>Cakes!<h1>
+	<p id="cakeList" style="margin-left: 15px"></p>
+</body>
+</html>
