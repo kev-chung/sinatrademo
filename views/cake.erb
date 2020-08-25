@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= @cake %></title>
+</head>
+<body>
+	<h1><%= @cake %></h1>
+	<form action='/edit_cake' method="POST">
+		<input type="text" name="updateCake" placeholder="Enter a new cake!">
+		<input type="submit" name="Submit">
+	</form>
+</body>
+</html>
