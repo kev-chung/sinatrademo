@@ -6,6 +6,6 @@ class CreateCakes < ActiveRecord::Migration[5.2]
       t.timestamps null: false
     end
 
-    add_index :resources, :name, unique: true
+    add_index :cakes, :cake, unique: true
   end
 end

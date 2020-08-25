@@ -10,13 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2020_08_25_154444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "cakes", id: :serial, force: :cascade do |t|
-    t.string "cake", limit: 30, null: false
+  create_table "cakes", force: :cascade do |t|
+    t.string "cake", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cake"], name: "index_cakes_on_cake", unique: true
   end
 
 end

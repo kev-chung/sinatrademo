@@ -43,7 +43,7 @@ end
 post '/add_cake' do
   begin
     connection = PG.connect :dbname => Sinatra::Application.environment == "production" ? ENV['DATABASE_URL'] : 'cakedb'
-    connection.exec "INSERT INTO cakes(cake) VALUES ('#{params[:newCake]}');"
+    connection.exec "INSERT INTO cakes(cake, created_at, updated_at) VALUES ('#{params[:newCake]}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);"
 
   rescue PG::Error => e
   	puts e.message.to_s
@@ -59,7 +59,7 @@ end
 post '/edit_cake/:id' do
   begin
     connection = PG.connect :dbname => Sinatra::Application.environment == "production" ? ENV['DATABASE_URL'] : 'cakedb'
-    connection.exec "UPDATE cakes SET cake = '#{params[:updateCake]}' WHERE id = #{@params[:id]};"
+    connection.exec "UPDATE cakes SET cake = '#{params[:updateCake]}', updated_at = CURRENT_TIMESTAMP WHERE id = #{@params[:id]};"
 
   rescue PG::Error => e
   	puts e.message.to_s
