@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/json'
 require 'pg'
+require 'sinatra/activerecord'
 
 get '/' do
   erb :index
@@ -55,10 +56,10 @@ post '/add_cake' do
 
 end
 
-post '/edit_cake' do
+post '/edit_cake/:id' do
   begin
     connection = PG.connect :dbname => 'cakedb'
-    connection.exec "UPDATE cakes SET cake = '#{params[:updateCake]}' WHERE id = #{@id};"
+    connection.exec "UPDATE cakes SET cake = '#{params[:updateCake]}' WHERE id = #{@params[:id]};"
 
   rescue PG::Error => e
   	puts e.message.to_s
@@ -70,6 +71,18 @@ post '/edit_cake' do
   redirect '/'
 end
 
-post '/delete_cake' do
+post '/delete_cake/:id' do
+  begin
+    connection = PG.connect :dbname => 'cakedb'
+    connection.exec "DELETE FROM cakes WHERE id = #{@params[:id]};"
+
+  rescue PG::Error => e
+  	puts e.message.to_s
+
+  ensure
+  	connection.close if connection
+  end
+
+  redirect '/'
 end
 

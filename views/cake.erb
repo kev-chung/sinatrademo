@@ -5,9 +5,12 @@
 </head>
 <body>
 	<h1><%= @cake %></h1>
-	<form action='/edit_cake' method="POST">
+	<form action='/edit_cake/<%= @id %>' method="POST">
 		<input type="text" name="updateCake" placeholder="Enter a new cake!">
 		<input type="submit" name="Submit">
+	</form>
+	<form action='/delete_cake/<%= @id %>' method="POST">
+		<input type="submit" name="Delete" value="Delete cake">
 	</form>
 </body>
 </html>
