@@ -9,7 +9,7 @@ end
 
 get '/cake/:id' do
   begin	
-  	connection = Sinatra::Application.environment == "production" ? DataObjects::Connection.new(ENV['DATABASE_URL']) : PG.connect :dbname => "cakedb"
+  	connection = DataObjects::Connection.new(ENV['DATABASE_URL'])
     @id = params[:id]
     query_result = connection.exec "SELECT cake FROM cakes WHERE id = '#{params[:id]}';"
     @cake = query_result.getvalue(0,0)
@@ -26,7 +26,7 @@ end
 
 get '/cakes.json' do
   begin	
-  	connection = Sinatra::Application.environment == "production" ? DataObjects::Connection.new(ENV['DATABASE_URL']) : PG.connect :dbname => "cakedb"
+  	connection = DataObjects::Connection.new(ENV['DATABASE_URL'])
     cake_list = connection.exec "SELECT * FROM cakes;"
 
   rescue PG::Error => e
@@ -42,7 +42,7 @@ end
 
 post '/add_cake' do
   begin
-  	connection = Sinatra::Application.environment == "production" ? DataObjects::Connection.new(ENV['DATABASE_URL']) : PG.connect :dbname => "cakedb"
+  	connection = DataObjects::Connection.new(ENV['DATABASE_URL'])
     connection.exec "INSERT INTO cakes(cake, created_at, updated_at) VALUES ('#{params[:newCake]}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);"
 
   rescue PG::Error => e
@@ -58,7 +58,7 @@ end
 
 post '/edit_cake/:id' do
   begin
-  	connection = Sinatra::Application.environment == "production" ? DataObjects::Connection.new(ENV['DATABASE_URL']) : PG.connect :dbname => "cakedb"
+  	connection = DataObjects::Connection.new(ENV['DATABASE_URL'])
     connection.exec "UPDATE cakes SET cake = '#{params[:updateCake]}', updated_at = CURRENT_TIMESTAMP WHERE id = #{@params[:id]};"
 
   rescue PG::Error => e
@@ -73,7 +73,7 @@ end
 
 post '/delete_cake/:id' do
   begin
-    connection = Sinatra::Application.environment == "production" ? DataObjects::Connection.new(ENV['DATABASE_URL']) : PG.connect :dbname => "cakedb"
+  	connection = DataObjects::Connection.new(ENV['DATABASE_URL'])
     connection.exec "DELETE FROM cakes WHERE id = #{@params[:id]};"
 
   rescue PG::Error => e
